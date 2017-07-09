@@ -9,16 +9,21 @@ def home_directory
 end
 
 def synced_folder_fstype
-  case host_inventory[:virtualization][:system]
-  when 'vbox'
+  return if %w(freebsd openbsd).include?(os[:family])
+
+  if virtualbox?
     'vboxsf'
-  when 'vmware'
-    if %w(arch fedora).include?(os[:family])
-      'fuse.vmhgfs-fuse'
-    elsif os[:family] == 'ubuntu' && os[:release] == '16.04'
-      'fuse.vmhgfs-fuse'
-    else
+  elsif vmware?
+    if os[:family] == 'centos'
       'vmhgfs'
+    elsif os[:family] == 'debian' && os[:release] =~ /^[678]\./
+      'vmhgfs'
+    elsif os[:family] == 'ubuntu' && os[:release] == '12.04'
+      'vmhgfs'
+    elsif os[:family] == 'ubuntu' && os[:release] == '14.04'
+      'none'
+    else
+      'fuse.vmhgfs-fuse'
     end
   end
 end
@@ -47,7 +52,7 @@ describe file('/etc/vagrant_box_build_time') do
   it { should be_file }
 end
 
-describe file('/vagrant'), unless: %w(freebsd openbsd).include?(os[:family]) do
+describe file('/vagrant'), if: synced_folder_fstype do
   it { should be_mounted.with type: synced_folder_fstype }
   it { should be_directory }
   it { should be_owned_by 'vagrant' }

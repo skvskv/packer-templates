@@ -1,15 +1,13 @@
 require 'spec_helper'
 
-def in_vmware?
-  host_inventory[:virtualization][:system] == 'vmware'
-end
-
 def vmhgfs
-  return nil unless in_vmware?
+  return unless vmware?
 
-  if %w(centos debian).include?(os[:family])
+  if os[:family] == 'centos'
     'vmhgfs'
-  elsif os[:family] == 'ubuntu' && os[:release] != '16.04'
+  elsif os[:family] == 'debian' && os[:release] =~ /^[678]\./
+    'vmhgfs'
+  elsif os[:family] == 'ubuntu' && os[:release] == '12.04'
     'vmhgfs'
   else
     nil
