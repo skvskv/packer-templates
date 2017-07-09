@@ -102,6 +102,7 @@
       "scripts/common/sshd.sh",
       "scripts/ubuntu/ansible.sh",
       "scripts/ubuntu/necessary_minimum.sh",
+      "scripts/ubuntu/zeroconf--nss-mdns--by--avahi.sh",
       "scripts/ubuntu/cleanup.sh",
       "scripts/common/minimize.sh"
     ]
