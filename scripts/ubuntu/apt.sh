@@ -10,3 +10,9 @@ if [ "$ubuntu_version" == '12.04' ]; then
 fi
 
 sudo apt-get update
+
+
+sudo apt-get -y install apt-utils
+sudo apt-get -y install apt-show-*
+sudo apt-get -y install apt-file
+sudo apt-file update
