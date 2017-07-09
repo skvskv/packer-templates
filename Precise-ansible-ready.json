@@ -100,6 +100,7 @@
       "scripts/ubuntu/init.sh",
       "scripts/common/vagrant.sh",
       "scripts/common/sshd.sh",
+      "scripts/common/ssh.sh",
       "scripts/ubuntu/ansible.sh",
       "scripts/ubuntu/necessary_minimum.sh",
       "scripts/ubuntu/zeroconf--nss-mdns--by--avahi.sh",
